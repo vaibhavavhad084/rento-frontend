@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    chunkSizeWarningLimit: 2000,
+    chunkSizeWarningLimit: 5000, // Increased to 5MB to suppress warnings
     rollupOptions: {
       output: {
         manualChunks: undefined,

@@ -5,6 +5,23 @@ import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
+// Add axios interceptors for better error handling
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (!error.response) {
+      // Network error
+      toast.error('Network error. Please check your connection.')
+      console.error('Network error:', error.message)
+    } else if (error.response.status === 404) {
+      toast.error('API endpoint not found. Please try again later.')
+    } else if (error.response.status >= 500) {
+      toast.error('Server error. Please try again later.')
+    }
+    return Promise.reject(error)
+  }
+)
+
 export const AppContext = createContext();
 
 export const AppProvider = ({ children })=>{
